@@ -101,58 +101,6 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions:
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Transactions api
-      description: API to get the transactions of the user
-      parameters:
-        - in: body
-          name: body
-          description: get the transactions of the user
-          required: true
-          schema:
-            $ref: '#/definitions/UserProfile'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: User profile transactions retrieved successully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/transactions/itemId:
-    put:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Transaction api
-      description: API to modify a transaction note and category of the user
-      parameters:
-        - in: body
-          name: body
-          description: modify a transaction note and category of the user
-          required: true
-          schema:
-            $ref: '#/definitions/UserProfile'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: User profile transactions modified successully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
