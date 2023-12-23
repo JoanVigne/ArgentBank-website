@@ -101,7 +101,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions:
+  /user/{account}/transactions:
     get:
       security:
         - Bearer: []
@@ -127,9 +127,11 @@ paths:
           description: Invalid Fields
         '401':
           description: Unauthorized
+        '404':
+          description: Transactions not found
         '500':
           description: Internal Server Error
-  /user/transactions/{id}:
+  /user/{account}/transactions/{id}:
     get:
       security:
         - Bearer: []
@@ -155,6 +157,8 @@ paths:
           description: Invalid Fields
         '401':
           description: Unauthorized
+        '404':
+          description: Transactions not found
         '500':
           description: Internal Server Error
     put:
@@ -182,6 +186,8 @@ paths:
           description: Invalid Fields
         '401':
           description: Unauthorized
+        '404':
+          description: Transactions not found
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -311,7 +317,7 @@ definitions:
         note:
           type: string
           example: "new note"
-        description:
+        category:
           type: string
           example: "new description"
   TransactionResponse:
