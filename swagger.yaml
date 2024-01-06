@@ -101,26 +101,25 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/{account}/transactions:
+  /{accountId}/transactions:
     get:
       security:
         - Bearer: []
       tags:
         - User Module
-      summary: User Transactions api
+      summary: User Transactions API
       description: API to get the transactions of the user
       parameters:
-        - in: body
-          name: body
-          description: get the transactions of the user
+        - name: accountId
+          in: path
+          type: string
+          description: ID of the account of a user
           required: true
-          schema:
-            $ref: '#/definitions/Account'
       produces:
         - application/json
       responses:
         '200':
-          description: User profile transactions retrieved successully
+          description: User profile transactions retrieved successfully
           schema:
             $ref: '#/definitions/UserTransactions'
         '400':
@@ -131,7 +130,7 @@ paths:
           description: Transactions not found
         '500':
           description: Internal Server Error
-  /user/{account}/transactions/{id}:
+  /{account}/transactions/{transactionId}:
     get:
       security:
         - Bearer: []
@@ -140,12 +139,16 @@ paths:
       summary: User Transaction api
       description: API to modify a transaction note and category of the user
       parameters:
-        - name: id
+        - name: account
           in: path
-          description: id of a transaction to be retrieved
+          type: string
+          description: id of the account to be retrieved
           required: true
-          schema:
-            $ref: '#/definitions/Transaction'
+        - name: transactionId
+          in: path
+          type: string
+          description: id of the transaction
+          required: true
       produces:
         - application/json
       responses:
@@ -161,6 +164,7 @@ paths:
           description: Transactions not found
         '500':
           description: Internal Server Error
+  /{account}/transactions/transaction:
     put:
       security:
         - Bearer: []
@@ -175,11 +179,16 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/TransactionModify'
+        - name: account
+          in: path
+          type: string
+          description: id of the account to be retrieved
+          required: true
       produces:
         - application/json
       responses:
         '200':
-          description: User profile transaction modified successully
+          description: User transaction modified successully
           schema:
             $ref: '#/definitions/TransactionResponse'
         '400':
@@ -230,9 +239,9 @@ definitions:
         type: string
       body:
         type: object
-    properties:
-      id:
-      type: string
+        properties:
+          id:
+            type: string
           email:
             type: string
   LoginResponse:
@@ -240,24 +249,12 @@ definitions:
     properties:
       token:
         type: string
-  Account:
-    type: object
-    properties:
-      email:
-        type: string
-        description: user email
-        example: "user@user.com"
-      id:
-        type: integer
-        format: int64
-        example: 1
   UserProfile:
     type: object
     properties:
       status: 
         type: integer
         format: int64
-        exemple: 0
       message:
         type: string
         example: "string"
@@ -319,7 +316,7 @@ definitions:
           example: "new note"
         category:
           type: string
-          example: "new description"
+          example: "new category"
   TransactionResponse:
     type: object
     properties:
